@@ -5,8 +5,8 @@ provider "aws" {
 }
 
 locals {
-  az_list = ["us-west-2a", "us-west-2b"]
-  subnet_list = ["web", "db"]
+  az_list          = ["us-west-2a", "us-west-2b"]
+  subnet_list      = ["web", "db"]
   subnet_list_full = [for x in local.az_list : [for y in concat(local.subnet_list, ["public"]) : "${x}-${y}"]]
 }
 
@@ -22,11 +22,11 @@ module "subnets" {
 }
 
 module "subnet_cidrs" {
-  source  = "hashicorp/subnets/cidr"
-  for_each = toset(local.az_list)
-  version = "1.0.0"
+  source          = "hashicorp/subnets/cidr"
+  for_each        = toset(local.az_list)
+  version         = "1.0.0"
   base_cidr_block = aws_vpc.this.cidr_block
-  networks = [for x in flatten(local.subnet_list_full) : {"name" = x, "new_bits" = 10}]
+  networks        = [for x in flatten(local.subnet_list_full) : { "name" = x, "new_bits" = 10 }]
 }
 
 output "cidrs" {

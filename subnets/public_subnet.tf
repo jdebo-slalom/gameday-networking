@@ -1,9 +1,9 @@
 
 
 resource "aws_subnet" "public" {
-  vpc_id            = var.vpc_id
-  cidr_block        = var.subnet_cidr_list["${var.az}-public"]
-  availability_zone = var.az
+  vpc_id                  = var.vpc_id
+  cidr_block              = var.subnet_cidr_list["${var.az}-public"]
+  availability_zone       = var.az
   map_public_ip_on_launch = true
 
   tags = {
@@ -58,7 +58,7 @@ resource "aws_route_table_association" "public" {
 #     protocol    = "tcp"
 #     cidr_blocks = ["0.0.0.0/0"]
 #   }
-  
+
 #   tags = {
 #     Name = "is311-networking-private-instance"
 #   }
