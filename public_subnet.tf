@@ -1,5 +1,5 @@
 resource "aws_subnet" "public" {
-  for_each = toset(local.public_subnet_list)
+  for_each = toset(local.subnet_list_public)
 
   vpc_id                  = aws_vpc.this.id
   cidr_block              = module.subnet_cidrs.network_cidr_blocks[each.key]
@@ -21,12 +21,12 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name = "Gameday-PublicRT"
+    Name = "Gameday-RT-public"
   }
 }
 
 resource "aws_route_table_association" "public" {
-  for_each = toset(local.public_subnet_list)
+  for_each = toset(local.subnet_list_public)
 
   subnet_id      = aws_subnet.public[each.key].id
   route_table_id = aws_route_table.public.id

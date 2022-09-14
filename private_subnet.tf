@@ -18,7 +18,7 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.this.id
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.this.id
   }
 
@@ -42,7 +42,7 @@ resource "aws_eip" "nat" {
 
 resource "aws_nat_gateway" "this" {
   allocation_id = aws_eip.nat.id
-  subnet_id     = element(aws_subnet.private, 0).id
+  subnet_id     = element(values(aws_subnet.private), 0).id
 
   tags = {
     Name = "Gameday-NATGW"

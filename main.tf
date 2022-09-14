@@ -4,9 +4,9 @@ provider "aws" {
 
 locals {
   az_list             = formatlist("%s%s", var.region, ["a", "b"])
-  subnet_list_private = flatten([for az in local.az_list: [for s in ["app", "db"]: "${az}_${s}"]])
-  subnet_list_public  = flatten([for az in local.az_list: [for s in ["public"]: "${az}_${s}"]])
-  subnet_list_full    = concat(subnet_list_private, subnet_list_public)
+  subnet_list_private = flatten([for az in local.az_list : [for s in ["app", "db"] : "${az}_${s}"]])
+  subnet_list_public  = flatten([for az in local.az_list : [for s in ["public"] : "${az}_${s}"]])
+  subnet_list_full    = concat(local.subnet_list_private, local.subnet_list_public)
 }
 
 variable "region" {
