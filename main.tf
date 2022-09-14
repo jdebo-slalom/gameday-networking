@@ -19,6 +19,10 @@ variable "cidr_block" {
   default     = "10.0.0.0/16"
 }
 
+output "vpc_id" {
+  value = aws_vpc.this.id
+}
+
 output "cidrs" {
   value = module.subnet_cidrs.network_cidr_blocks
 }
