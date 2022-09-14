@@ -1,15 +1,14 @@
 resource "aws_vpc" "this" {
-  cidr_block = "172.32.0.0/16"
+  cidr_block = var.cidr_block
 
   tags = {
-    Name = "gd-vpc"
+    Name = "Gameday-VPC"
   }
 }
 
-resource "aws_internet_gateway" "this" {
-  vpc_id = aws_vpc.this.id
-
-  tags = {
-    Name = "Internet Gateway"
-  }
+module "subnet_cidrs" {
+  source          = "hashicorp/subnets/cidr"
+  version         = "1.0.0"
+  base_cidr_block = aws_vpc.this.cidr_block
+  networks        = [for s in local.subnet_list_full: {"name" = s, "new_bits" = 4}]
 }
